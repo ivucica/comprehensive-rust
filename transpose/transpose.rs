@@ -1,6 +1,3 @@
-// TODO: remove this when you're done with your implementation.
-#![allow(unused_variables, dead_code)]
-
 fn transpose<const M : usize, const N : usize>(matrix: [[i32; M]; N]) -> [[i32; N]; M] {
     let mut new_rows : [[i32; N]; M] = [[0; N]; M];
     for new_col_id in 0..matrix.len() {
