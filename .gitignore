@@ -1,5 +1,7 @@
 collatz/target
 collatz/collatz
+transpose/target
+transpose/transpose
 bazel-*
 .bazelrc.*secrets
 hello-world/hello
