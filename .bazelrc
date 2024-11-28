@@ -1,3 +1,12 @@
+# Enable clippy.
+build --aspects=@rules_rust//rust:defs.bzl%rust_clippy_aspect
+build --output_groups=+clippy_checks
+# We could use a clippy.toml:
+# build --@rules_rust//:clippy.toml=//:clippy.toml
+
+build --@rules_rust//:rustc_output_diagnostics=true --output_groups=+rust_lib_rustc_output,+rust_metadata_rustc_output
+
+
 # Cut a stamped release.
 build:release -c opt --define STAMPED_FOR_RELEASE=1 --stamp --workspace_status_command="$PWD/stamp.sh"
 
