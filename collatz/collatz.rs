@@ -22,8 +22,11 @@ fn collatz_length_no_recurse(mut n: i32) -> u32 {
 #[test]
 fn test_collatz_length() {
     assert_eq!(collatz_length(11), 15);
-    assert_eq!(collatz_length_no_recurse(11), 15);
+}
 
+#[test]
+fn test_collatz_length_no_recurse() {
+    assert_eq!(collatz_length_no_recurse(11), 15);
 }
 
 fn main() {
