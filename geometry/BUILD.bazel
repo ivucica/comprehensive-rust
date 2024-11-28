@@ -1,0 +1,20 @@
+load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_test")
+
+rust_binary(
+    name = "geometry",
+    srcs = ["geometry.rs"],
+    crate_root = "geometry.rs",
+    edition = "2018",
+    deps = [
+        # Add dependencies here
+    ],
+)
+
+#rust_test(
+#    name = "geometry_test",
+#    srcs = ["geometry.rs"],
+#    edition = "2018",
+#    deps = [
+#        # Add test dependencies here
+#    ],
+#)
