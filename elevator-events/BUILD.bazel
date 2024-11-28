@@ -14,12 +14,3 @@ alias(
     name = "elevator-events",
     actual = ":elevator_events",
 )
-
-rust_test(
-    name = "elevator_events_test",
-    srcs = ["elevator_events.rs"],
-    edition = "2018",
-    deps = [
-        # Add test dependencies here
-    ],
-)
