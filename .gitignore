@@ -1,0 +1,5 @@
+collatz/target
+collatz/collatz
+bazel-*
+.bazelrc.*secrets
+hello-world/hello

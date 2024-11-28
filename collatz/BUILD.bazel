@@ -1,0 +1,21 @@
+load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_test")
+
+rust_binary(
+    name = "collatz",
+    srcs = ["collatz.rs"],
+    crate_root = "collatz.rs",
+    edition = "2018",
+    deps = [
+        # ...list of dependencies if any...
+    ],
+)
+
+rust_test(
+    name = "collatz_test",
+    srcs = ["collatz.rs"],
+    crate_root = "collatz.rs",
+    edition = "2018",
+    deps = [
+        # ...list of dependencies if any...
+    ],
+)

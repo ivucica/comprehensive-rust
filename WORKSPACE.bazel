@@ -1,0 +1,42 @@
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+# Load the Rust rules
+http_archive(
+    name = "rules_rust",
+    strip_prefix = "rules_rust-0.54.1",
+    integrity = "sha256-72SWmp+smWgg7eR3yHTBXv0G10i1uaA3LaDmSTT4KYk=",
+    urls = ["https://github.com/bazelbuild/rules_rust/archive/0.54.1.tar.gz"],
+)
+
+load("@rules_rust//rust:repositories.bzl", "rust_repositories")
+
+# Fetch the necessary repositories
+rust_repositories()
+
+# Set up the Rust toolchain
+load("@rules_rust//rust:repositories.bzl", "rules_rust_dependencies", "rust_register_toolchains")
+
+rules_rust_dependencies()
+
+rust_register_toolchains(
+    edition = "2018",
+)
+
+# Toolchains for remote execution via buildbuddy.
+http_archive(
+    name = "io_buildbuddy_buildbuddy_toolchain",
+    sha256 = "1cab6ef3ae9b4211ab9d57826edd4bbc34e5b9e5cb1927c97f0788d8e7ad0442",
+    strip_prefix = "buildbuddy-toolchain-b043878a82f266fd78369b794a105b57dc0b2600",
+    urls = ["https://github.com/buildbuddy-io/buildbuddy-toolchain/archive/b043878a82f266fd78369b794a105b57dc0b2600.tar.gz"],
+)
+
+load("@io_buildbuddy_buildbuddy_toolchain//:deps.bzl", "buildbuddy_deps")
+
+buildbuddy_deps()
+
+load("@io_buildbuddy_buildbuddy_toolchain//:rules.bzl", "UBUNTU20_04_IMAGE", "buildbuddy")
+
+buildbuddy(
+    name = "buildbuddy_toolchain",
+    container_image = UBUNTU20_04_IMAGE,
+)
