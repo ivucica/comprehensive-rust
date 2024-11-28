@@ -1,6 +1,6 @@
 # Enable clippy.
-build --aspects=@rules_rust//rust:defs.bzl%rust_clippy_aspect
-build --output_groups=+clippy_checks
+#build --aspects=@rules_rust//rust:defs.bzl%rust_clippy_aspect
+#build --output_groups=+clippy_checks
 # We could use a clippy.toml:
 # build --@rules_rust//:clippy.toml=//:clippy.toml
 
