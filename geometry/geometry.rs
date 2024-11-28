@@ -3,16 +3,19 @@
 // root, like `v.sqrt()`.
 
 
-fn magnitude(...) -> f64 {
-    todo!()
+fn magnitude(v: &[f64;3]) -> f64 {
+    (v[0]*v[0]+v[1]*v[1]+v[2]*v[2]).sqrt()
 }
 
 // Normalize a vector by calculating its magnitude and dividing all of its
 // coordinates by that magnitude.
 
 
-fn normalize(...) {
-    todo!()
+fn normalize(v: &mut [f64;3]) {
+    let m = magnitude(v);
+    v[0] /= m;
+    v[1] /= m;
+    v[2] /= m;
 }
 
 // Use the following `main` to test your work.
