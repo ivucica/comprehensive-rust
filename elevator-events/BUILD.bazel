@@ -1,0 +1,25 @@
+load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_test")
+
+rust_binary(
+    name = "elevator_events",
+    srcs = ["elevator_events.rs"],
+    crate_root = "elevator_events.rs",
+    edition = "2018",
+    deps = [
+        # Add dependencies here
+    ],
+)
+
+alias(
+    name = "elevator-events",
+    actual = ":elevator_events",
+)
+
+rust_test(
+    name = "elevator_events_test",
+    srcs = ["elevator_events.rs"],
+    edition = "2018",
+    deps = [
+        # Add test dependencies here
+    ],
+)
