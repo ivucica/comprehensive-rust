@@ -18,6 +18,24 @@ fn normalize(v: &mut [f64;3]) {
     v[2] /= m;
 }
 
+#[test]
+fn test_magnitude_unit() {
+    assert_eq!(magnitude(&[0.0, 1.0, 0.0]), 1.0)
+}
+
+#[test]
+fn test_magnitude_other() {
+    assert!(magnitude(&[1.0, 2.0, 9.0]) - 9.27 < 0.01)
+}
+
+#[test]
+fn test_normalize() {
+    let mut v = [1.0, 2.0, 9.0];
+    normalize(&mut v);
+    assert!(magnitude(&v) - 1.0 < 0.001);
+
+}
+
 // Use the following `main` to test your work.
 
 fn main() {

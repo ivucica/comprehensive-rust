@@ -10,11 +10,11 @@ rust_binary(
     ],
 )
 
-#rust_test(
-#    name = "geometry_test",
-#    srcs = ["geometry.rs"],
-#    edition = "2018",
-#    deps = [
-#        # Add test dependencies here
-#    ],
-#)
+rust_test(
+    name = "geometry_test",
+    srcs = ["geometry.rs"],
+    edition = "2018",
+    deps = [
+        # Add test dependencies here
+    ],
+)
