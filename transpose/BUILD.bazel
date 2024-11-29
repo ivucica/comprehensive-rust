@@ -1,22 +1,27 @@
 load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_test")
+load("@crate_index_cargo_local//:defs.bzl", "aliases", "all_crate_deps")
 
 rust_binary(
     name = "transpose",
     srcs = ["transpose.rs"],
     crate_root = "transpose.rs",
     edition = "2018",
-    deps = [
-        # ...list of dependencies if any...
-    ],
+
+    proc_macro_deps = all_crate_deps(proc_macro = True),
+    deps = all_crate_deps(normal = True),
+    aliases = aliases(),
 )
 
 rust_test(
     name = "transpose_test",
-    srcs = ["transpose.rs"],
-    crate_root = "transpose.rs",
+    crate = ":transpose",
     edition = "2018",
     deps = [
         # ...list of dependencies if any...
     ],
     use_libtest_harness = True,
+
+
+    proc_macro_deps = all_crate_deps(proc_macro_dev = True),
+    deps = all_crate_deps(normal_dev = True),
 )
