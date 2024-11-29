@@ -1,0 +1,23 @@
+load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_test")
+
+rust_binary(
+    name = "generic_logger",
+    srcs = ["generic_logger.rs"],
+    crate_root = "generic_logger.rs",
+    edition = "2018",
+    deps = [
+        # Add dependencies here
+    ],
+)
+
+rust_test(
+    name = "generic_logger_test",
+    srcs = ["generic_logger.rs"],
+    edition = "2018",
+    deps = [],
+)
+
+alias(
+    name = "generic-logger",
+    actual = ":generic_logger",
+)
