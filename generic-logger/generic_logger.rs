@@ -11,11 +11,11 @@ impl Logger for StdoutLogger {
     }
 }
 
-struct VerbosityFilter {
+struct VerbosityFilter<L: Logger> {
     max_verbosity: u8,
-    inner: Box<dyn Logger>,
+    inner: L,
 }
-impl Logger for VerbosityFilter {
+impl<L: Logger> Logger for VerbosityFilter<L> {
     fn log(&self, verbosity: u8, message: &str) {
         if verbosity <= self.max_verbosity {
             self.inner.log(verbosity, message)
@@ -25,7 +25,7 @@ impl Logger for VerbosityFilter {
 
 
 fn main() {
-    let logger = VerbosityFilter { max_verbosity: 3, inner: Box::new(StdoutLogger) };
+    let logger = VerbosityFilter { max_verbosity: 3, inner: StdoutLogger };
     logger.log(5, "FYI");
     logger.log(2, "Uhoh");
 }
