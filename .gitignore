@@ -6,6 +6,10 @@ geometry/target
 geometry/geometry
 expressions/target
 expressions/expressions
+generic-logger/target
+generic-logger/generic-logger
+generic-min/target
+generic-min/generic-min
 bazel-*
 .bazelrc.*secrets
 hello-world/hello
