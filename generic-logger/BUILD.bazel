@@ -15,6 +15,7 @@ rust_test(
     srcs = ["generic_logger.rs"],
     edition = "2018",
     deps = [],
+    use_libtest_harness = True,
 )
 
 alias(

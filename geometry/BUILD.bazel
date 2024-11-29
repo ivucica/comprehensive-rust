@@ -17,4 +17,5 @@ rust_test(
     deps = [
         # Add test dependencies here
     ],
+    use_libtest_harness = True,
 )

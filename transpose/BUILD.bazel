@@ -18,4 +18,5 @@ rust_test(
     deps = [
         # ...list of dependencies if any...
     ],
+    use_libtest_harness = True,
 )

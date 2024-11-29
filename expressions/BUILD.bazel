@@ -5,4 +5,5 @@ rust_test(
     srcs = ["expressions.rs"],
     edition = "2018",
     deps = [],
+    use_libtest_harness = True,
 )
