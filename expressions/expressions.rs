@@ -18,7 +18,29 @@ enum Expression {
 }
 
 fn eval(e: Expression) -> Result<i64, String> {
-    todo!()
+    match e {
+        Expression::Op { op, left, right } => {
+            let l = match eval(*left) {
+                // * because this is a "boxed" value, a "smart pointer"
+                Result::Ok(v) => v,
+                Result::Err(e) => return Err(e),
+            };
+            let r = match eval(*right) {
+                Result::Ok(v) => v,
+                Result::Err(e) => return Err(e),
+            };
+            match op {
+                Operation::Add => Result::Ok(l + r),
+                Operation::Sub => Result::Ok(l - r),
+                Operation::Mul => Result::Ok(l * r),
+                Operation::Div => match r {
+                    0 => Err(String::from("division by zero")),
+                    r => Result::Ok(l / r),
+                },
+            }
+        }
+        Expression::Value(v) => Ok(v),
+    }
 }
 
 #[test]
@@ -102,8 +124,4 @@ fn test_error() {
         }),
         Err(String::from("division by zero"))
     );
-}
-
-fn main() {
-    println!("not a main");
 }

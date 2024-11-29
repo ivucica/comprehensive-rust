@@ -4,6 +4,8 @@ transpose/target
 transpose/transpose
 geometry/target
 geometry/geometry
+expressions/target
+expressions/expressions
 bazel-*
 .bazelrc.*secrets
 hello-world/hello

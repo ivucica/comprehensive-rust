@@ -1,11 +1,8 @@
 load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_test")
 
-rust_binary(
-    name = "expressions",
+rust_test(
+    name = "expressions_test",
     srcs = ["expressions.rs"],
-    crate_root = "expressions.rs",
     edition = "2018",
-    deps = [
-        # Add dependencies here
-    ],
+    deps = [],
 )
