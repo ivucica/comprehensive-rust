@@ -1,0 +1,28 @@
+load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_test")
+
+rust_binary(
+    name = "generic_min",
+    srcs = ["generic_min.rs"],
+    crate_root = "generic_min.rs",
+    edition = "2018",
+    deps = [
+        # ...list of dependencies if any...
+    ],
+)
+
+rust_test(
+    name = "generic_min_test",
+    srcs = ["generic_min.rs"],
+    crate_root = "generic_min.rs",
+    edition = "2018",
+    deps = [
+        # ...list of dependencies if any...
+    ],
+    use_libtest_harness = True,
+)
+
+alias(
+    name = "generic-min",
+    actual = ":generic_min",
+)
+
