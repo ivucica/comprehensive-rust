@@ -17,10 +17,23 @@ impl<T> Counter<T> where T: Eq + hash::Hash {
 
     /// Count an occurrence of the given value.
     fn count(&mut self, value: T) {
-        if self.values.contains_key(&value) {
-            *self.values.get_mut(&value).unwrap() += 1;
+        //*self.values.entry(value).or_insert(0) += 1;
+        /*
+        // from clippy:
+        if let std::collections::hash_map::Entry::Vacant(e) = self.values.entry(value) {
+            e.insert(1);
         } else {
-            self.values.insert(value, 1);
+            *self.values.get_mut(&value).unwrap() += 1;
+        }
+        */
+        use std::collections::hash_map::Entry;
+        match self.values.entry(value) {
+            Entry::Vacant(e) => {
+                e.insert(1);
+            },
+            Entry::Occupied(mut e) => {
+                *(e.get_mut()) += 1;
+            }
         }
     }
 
