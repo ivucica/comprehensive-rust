@@ -11,15 +11,15 @@ impl<R> Read for RotDecoder<R> where R: Read {
         match self.input.read(buf) {
             Ok(n) => {
                 // convert here
-                for i in 0..n {
-                    buf[i] = match buf[i] {
-                        c if (b'A'..=b'Z').contains(&c) => {
-                            if c + self.rot > b'Z' { b'A' + c + self.rot - b'Z' - 1 } else { c + self.rot }
+                for ci in buf.iter_mut().take(n) {
+                    *ci = match ci {
+                        ref c if (b'A'..=b'Z').contains(c) => {
+                            if **c + self.rot > b'Z' { b'A' + **c + self.rot - b'Z' - 1 } else { **c + self.rot }
                         },
-                        c if (b'a'..=b'z').contains(&c) => {
-                            if c + self.rot > b'z' { b'a' + c + self.rot - b'z' - 1 } else { c + self.rot }
+                        ref c if (b'a'..=b'z').contains(c) => {
+                            if **c + self.rot > b'z' { b'a' + **c + self.rot - b'z' - 1 } else { **c + self.rot }
                         },
-                        c => c,
+                        ref c => **c,
                     };
                 };
                 Ok(n)
