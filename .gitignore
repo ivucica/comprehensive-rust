@@ -12,6 +12,8 @@ generic-min/target
 generic-min/generic-min
 counter/target
 counter/counter
+rot13/target
+rot13/rot13
 bazel-*
 .bazelrc.*secrets
 hello-world/hello

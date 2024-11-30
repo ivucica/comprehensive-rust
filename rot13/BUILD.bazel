@@ -1,0 +1,19 @@
+load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_test")
+
+rust_binary(
+    name = "rot13",
+    srcs = ["rot13.rs"],
+    crate_root = "rot13.rs",
+    edition = "2018",
+    deps = [
+        # ...list of dependencies if any...
+    ],
+)
+
+rust_test(
+    name = "rot13_test",
+    srcs = ["rot13.rs"],
+    edition = "2018",
+    deps = [],
+    use_libtest_harness = True,
+)
