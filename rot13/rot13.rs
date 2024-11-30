@@ -12,16 +12,16 @@ impl<R> Read for RotDecoder<R> where R: Read {
             Ok(n) => {
                 // convert here
                 for ci in buf.iter_mut().take(n) {
-                    *ci = match ci {
-                        ref c if (b'A'..=b'Z').contains(c) => {
-                            if **c + self.rot > b'Z' { b'A' + **c + self.rot - b'Z' - 1 } else { **c + self.rot }
+                    *ci = match *ci {
+                        c if (b'A'..=b'Z').contains(&c) => {
+                            if c + self.rot > b'Z' { b'A' + c + self.rot - b'Z' - 1 } else { c + self.rot }
                         },
-                        ref c if (b'a'..=b'z').contains(c) => {
-                            if **c + self.rot > b'z' { b'a' + **c + self.rot - b'z' - 1 } else { **c + self.rot }
+                        c if (b'a'..=b'z').contains(&c) => {
+                            if c + self.rot > b'z' { b'a' + c + self.rot - b'z' - 1 } else { c + self.rot }
                         },
-                        ref c => **c,
+                        c => c,
                     };
-                };
+                }
                 Ok(n)
             },
             e => e,
