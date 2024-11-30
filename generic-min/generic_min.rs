@@ -7,15 +7,15 @@ fn min<T: Ord>(a: T, b: T) -> T {
     
     // variant two:
     if a < b {
-        a
+        return a;
     } else {
-        b
+        return b;
     }
 
     // variant 3:
-    match l.cmp(&r) {
-        Ordering::Less | Ordering::Equal => l,
-        _ => r, // or Ordering::Greater
+    match a.cmp(&b) {
+        Ordering::Less | Ordering::Equal => a,
+        _ => b, // or Ordering::Greater
     }   
 }
 
