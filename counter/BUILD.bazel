@@ -1,0 +1,19 @@
+load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_test")
+
+rust_binary(
+    name = "counter",
+    srcs = ["counter.rs"],
+    crate_root = "counter.rs",
+    edition = "2018",
+    deps = [
+        # ...list of dependencies if any...
+    ],
+)
+
+rust_test(
+    name = "counter_test",
+    srcs = ["counter.rs"],
+    edition = "2018",
+    deps = [],
+    use_libtest_harness = True,
+)
