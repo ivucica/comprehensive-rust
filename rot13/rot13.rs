@@ -13,10 +13,10 @@ impl<R> Read for RotDecoder<R> where R: Read {
                 // convert here
                 for i in 0..n {
                     buf[i] = match buf[i] {
-                        c if c >= b'A' && c <= b'Z' => {
+                        c if (b'A'..=b'Z').contains(&c) => {
                             if c + self.rot > b'Z' { b'A' + c + self.rot - b'Z' - 1 } else { c + self.rot }
                         },
-                        c if c >= b'a'  && c <= b'z' => {
+                        c if (b'a'..=b'z').contains(&c) => {
                             if c + self.rot > b'z' { b'a' + c + self.rot - b'z' - 1 } else { c + self.rot }
                         },
                         c => c,
