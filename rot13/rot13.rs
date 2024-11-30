@@ -6,6 +6,28 @@ struct RotDecoder<R: Read> {
 }
 
 // Implement the `Read` trait for `RotDecoder`.
+impl<R> Read for RotDecoder<R> where R: Read {
+    fn read(&mut self, buf: &mut [u8]) -> std::io::Result<usize> {
+        match self.input.read(buf) {
+            Ok(n) => {
+                // convert here
+                for i in 0..n {
+                    buf[i] = match buf[i] {
+                        c if c >= 'A' as u8 && c <= 'Z' as u8 => {
+                            if c + self.rot > 'Z' as u8 { 'A' as u8 + c + self.rot - 'Z' as u8 - 1 } else { c + self.rot }
+                        },
+                        c if c >= 'a' as u8 && c <= 'z' as u8 => {
+                            if c + self.rot > 'z' as u8 { 'a' as u8 + c + self.rot - 'z' as u8 - 1 } else { c + self.rot }
+                        },
+                        c => c,
+                    };
+                };
+                Ok(n)
+            },
+            e => e,
+        }
+    }
+}
 
 fn main() {
     let mut rot =
