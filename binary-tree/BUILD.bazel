@@ -1,14 +1,4 @@
-load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_test")
-
-rust_binary(
-    name = "binary_tree",
-    srcs = ["binary_tree.rs"],
-    crate_root = "binary_tree.rs",
-    edition = "2018",
-    deps = [
-        # ...list of dependencies if any...
-    ],
-)
+load("@rules_rust//rust:defs.bzl", "rust_test")
 
 rust_test(
     name = "binary_tree_test",
@@ -21,7 +11,3 @@ rust_test(
     use_libtest_harness = True,
 )
 
-alias(
-    name = "binary-tree",
-    actual = ":binary_tree",
-)
