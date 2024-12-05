@@ -10,6 +10,8 @@ generic-logger/target
 generic-logger/generic-logger
 generic-min/target
 generic-min/generic-min
+elevator-events/target
+elevator-events/elevator-events
 counter/target
 counter/counter
 rot13/target
