@@ -14,6 +14,8 @@ counter/target
 counter/counter
 rot13/target
 rot13/rot13
+memory-management/target
+memory-management/memory-management
 bazel-*
 .bazelrc.*secrets
 hello-world/hello
