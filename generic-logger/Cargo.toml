@@ -8,5 +8,5 @@ edition = "2021"
 [dependencies]
 
 [[bin]]
-name = "generic_logger"
+name = "generic-logger"
 path = "generic_logger.rs"
