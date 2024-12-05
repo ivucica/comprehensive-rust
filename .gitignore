@@ -22,6 +22,8 @@ binary-tree/target
 binary-tree/binary-tree
 health-statistics/target
 health-statistics/health-statistics
+protobuf-parsing/target
+protobuf-parsing/protobuf-parsing
 bazel-*
 .bazelrc.*secrets
 hello-world/hello

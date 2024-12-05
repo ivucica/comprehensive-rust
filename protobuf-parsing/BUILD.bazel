@@ -1,0 +1,24 @@
+load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_test")
+
+rust_binary(
+    name = "protobuf_parsing",
+    srcs = ["protobuf_parsing.rs"],
+    crate_root = "protobuf_parsing.rs",
+    edition = "2018",
+    deps = [
+        # ...list of dependencies if any...
+    ],
+)
+
+rust_test(
+    name = "protobuf_parsing_test",
+    srcs = ["protobuf_parsing.rs"],
+    edition = "2018",
+    deps = [],
+    use_libtest_harness = True,
+)
+
+alias(
+    name = "protobuf-parsing",
+    actual = ":protobuf_parsing",
+)
