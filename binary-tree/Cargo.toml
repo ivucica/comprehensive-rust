@@ -5,6 +5,6 @@ edition = "2021"
 
 [dependencies]
 
-[[bin]]
-name = "binary-tree"
+[lib]
 path = "binary_tree.rs"
+crate-type = ["lib"]  # not needed
