@@ -6,6 +6,12 @@ struct Node<T: Ord> {
     right: Subtree<T>,
 }
 
+impl<T: Ord> Node<T> {
+    fn new(value: T) -> Self {
+        return Self { value:value, left: Subtree::new(), right: Subtree::new() }
+    }
+}
+
 /// A possibly-empty subtree.
 #[derive(Debug)]
 struct Subtree<T: Ord>(Option<Box<Node<T>>>);
@@ -38,6 +44,56 @@ impl<T: Ord> BinaryTree<T> {
 
 // Implement `new`, `insert`, `len`, and `has` for `Subtree`.
 
+impl<T: Ord> Subtree<T> {
+    fn new() -> Self {
+        Subtree{ 0: None }
+    }
+
+    fn insert(&mut self, value: T) {
+        if let Some(v) = &mut self.0 {
+                if v.value == value {
+                    return;
+                }
+                if value < v.value {
+                    v.left.insert(value);
+                    return;
+                }
+                if value > v.value {
+                    v.right.insert(value);
+                    return;
+                }
+                // or
+                //match value.cmp(v.value) {
+                //    Ordering::Less => v.left.insert(...)
+            } else {
+                self.0 = Some(Box::new(Node::new(value)))
+            }
+    }
+
+    fn has(&self, value: &T) -> bool {
+        use std::cmp::Ordering;
+
+        if let Some(v) = &self.0 {
+            match value.cmp(&v.value) {
+                Ordering::Less => v.left.has(value),
+                Ordering::Greater => v.right.has(value),
+                Ordering::Equal => true,
+            }
+        } else {
+            false
+        }
+    }
+
+    fn len(&self) -> usize {
+        if let Some(v) = &self.0 {
+            1 + v.left.len() + v.right.len()
+        } else {
+            0
+        }
+    }
+
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -67,6 +123,9 @@ mod tests {
         tree.insert(0);
         check_has(&tree, &[true, false, false, false, false]);
         tree.insert(4);
+        // In case left<->right were swapped, this would be a point
+        // to spot it:
+        // println!("{:#?}", tree);
         check_has(&tree, &[true, false, false, false, true]);
         tree.insert(4);
         check_has(&tree, &[true, false, false, false, true]);
