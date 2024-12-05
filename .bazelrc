@@ -12,7 +12,7 @@ build:release -c opt --define STAMPED_FOR_RELEASE=1 --stamp --workspace_status_c
 
 # Use buildbuddy by passing --config=remote.
 # This should be fine for this open source project.
-build:remote --remote_executor=grpcs://remote.buildbuddy.io
+build:remote --remote_executor=grpcs://ivucica.buildbuddy.io
 build:remote --host_platform=@buildbuddy_toolchain//:platform
 build:remote --platforms=@buildbuddy_toolchain//:platform
 build:remote --extra_execution_platforms=@buildbuddy_toolchain//:platform
@@ -24,11 +24,11 @@ build:remote --java_toolchain=@buildbuddy_toolchain//:toolchain_jdk8
 build:remote --host_java_toolchain=@buildbuddy_toolchain//:toolchain_jdk8
 build:remote --define=EXECUTOR=remote
 
-build:remote --bes_results_url=https://app.buildbuddy.io/invocation/
-build:remote --bes_backend=grpcs://remote.buildbuddy.io
-build:remote --remote_cache=grpcs://remote.buildbuddy.io
+build:remote --bes_results_url=https://ivucica.buildbuddy.io/invocation/
+build:remote --bes_backend=grpcs://ivucica.buildbuddy.io
+build:remote --remote_cache=grpcs://ivucica.buildbuddy.io
 build:remote --remote_timeout=3600
-build:remote --remote_executor=grpcs://remote.buildbuddy.io
+build:remote --remote_executor=grpcs://ivucica.buildbuddy.io
 
 # build:remote --build_metadata=REPO_URL=https://github.com/ivucica/comprehensive-rust
 # build:remote --build_metadata=VISIBILITY=PUBLIC  # default for unauthenticated, could be put into buildbuddysecrets if authenticated
@@ -43,11 +43,11 @@ build:remote --jobs=50
 
 # Use buildbuddy for cache only, by passing --config=remotecache.
 # This should be fine for this open source project.
-build:remotecache --bes_results_url=https://app.buildbuddy.io/invocation/
-build:remotecache --bes_backend=grpcs://remote.buildbuddy.io
-build:remotecache --remote_cache=grpcs://remote.buildbuddy.io
+build:remotecache --bes_results_url=https://ivucica.buildbuddy.io/invocation/
+build:remotecache --bes_backend=grpcs://ivucica.buildbuddy.io
+build:remotecache --remote_cache=grpcs://ivucica.buildbuddy.io
 build:remotecache --remote_timeout=3600
-build:remotecache --remote_executor=grpcs://remote.buildbuddy.io
+build:remotecache --remote_executor=grpcs://ivucica.buildbuddy.io
 
 # build:remotecache --build_metadata=REPO_URL=https://github.com/ivucica/comprehensive-rust
 # build:remotecache --build_metadata=VISIBILITY=PUBLIC  # default for unauthenticated, could be put into buildbuddysecrets if authenticated
