@@ -102,9 +102,20 @@ fn parse_field(data: &[u8]) -> (Field, &[u8]) {
     let (tag, remainder) = parse_varint(data);
     let (field_num, wire_type) = unpack_tag(tag);
     let (fieldvalue, remainder) = match wire_type {
-        _ => todo!("Based on the wire type, build a Field, consuming as many bytes as necessary.")
+        WireType::Varint => {
+            let (value, remainder) = parse_varint(remainder);
+            (FieldValue::Varint(value), remainder)
+            //todo!("Based on the wire type, build a Field, consuming as many bytes as necessary.")
+        }
+        WireType::Len => {
+            // Parse the length of the field. Represented as a Varint.
+            let (len, remainder) = parse_varint(remainder);
+            (FieldValue::Len(&remainder[..len as usize]), &remainder[len as usize..])
+            
+
+        }
     };
-    todo!("Return the field, and any un-consumed bytes.")
+    (Field { field_num, value: fieldvalue }, remainder)
 }
 
 /// Parse a message in the given data, calling `T::add_field` for each field in
@@ -122,12 +133,24 @@ fn parse_message<'a, T: ProtoMessage<'a>>(mut data: &'a [u8]) -> T {
 }
 
 #[derive(Debug, Default)]
+#[derive(PartialEq)]
 struct PhoneNumber<'a> {
     number: &'a str,
     type_: &'a str,
 }
 
+impl<'a> ProtoMessage<'a> for PhoneNumber<'a> {
+    fn add_field(&mut self, field: Field<'a>) {
+        match field.field_num {
+            1 => self.number = field.value.as_str(),
+            2 => self.type_ = field.value.as_str(),
+            _ => panic!("Unknown field number: {}", field.field_num),
+        }
+    }
+}
+
 #[derive(Debug, Default)]
+#[derive(PartialEq)]
 struct Person<'a> {
     name: &'a str,
     id: u64,
@@ -135,8 +158,30 @@ struct Person<'a> {
 }
 
 // TODO: Implement ProtoMessage for Person and PhoneNumber.
+impl<'a> ProtoMessage<'a> for Person<'a> {
+    fn add_field(&mut self, field: Field<'a>) {
+        match field.field_num {
+            1 => self.name = field.value.as_str(),
+            2 => self.id = field.value.as_u64(),
+            3 => {
+                let phone = parse_message(field.value.as_bytes());
+                self.phone.push(phone);
+            }
+            _ => panic!("Unknown field number: {}", field.field_num),
+        }
+    }
+}
+
+#[test]
+fn test_code() {
+    test_impl();
+}
 
 fn main() {
+    test_impl();
+}
+
+fn test_impl() {
     let person_id: Person = parse_message(&[0x10, 0x2a]);
     assert_eq!(person_id, Person { name: "", id: 42, phone: vec![] });
 
