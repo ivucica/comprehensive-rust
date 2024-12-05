@@ -1,0 +1,10 @@
+[package]
+name = "health-statistics"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+
+[[bin]]
+name = "health-statistics"
+path = "health_statistics.rs"

@@ -1,0 +1,24 @@
+load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_test")
+
+rust_binary(
+    name = "health_statistics",
+    srcs = ["health_statistics.rs"],
+    crate_root = "health_statistics.rs",
+    edition = "2018",
+    deps = [
+        # ...list of dependencies if any...
+    ],
+)
+
+rust_test(
+    name = "health_statistics_test",
+    srcs = ["health_statistics.rs"],
+    edition = "2018",
+    deps = [],
+    use_libtest_harness = True,
+)
+
+alias(
+    name = "health-statistics",
+    actual = ":health_statistics",
+)

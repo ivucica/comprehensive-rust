@@ -20,6 +20,8 @@ memory-management/target
 memory-management/memory-management
 binary-tree/target
 binary-tree/binary-tree
+health-statistics/target
+health-statistics/health-statistics
 bazel-*
 .bazelrc.*secrets
 hello-world/hello
