@@ -1,0 +1,10 @@
+[package]
+name = "binary-tree"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+
+[[bin]]
+name = "binary-tree"
+path = "binary_tree.rs"

@@ -16,6 +16,8 @@ rot13/target
 rot13/rot13
 memory-management/target
 memory-management/memory-management
+binary-tree/target
+binary-tree/binary-tree
 bazel-*
 .bazelrc.*secrets
 hello-world/hello
