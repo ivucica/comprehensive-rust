@@ -1,0 +1,16 @@
+load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_test")
+
+rust_binary(
+    name = "memory_management",
+    srcs = ["memory_management.rs"],
+    crate_root = "memory_management.rs",
+    edition = "2018",
+    deps = [
+        # ...list of dependencies if any...
+    ],
+)
+
+alias(
+    name = "memory-management",
+    actual = ":memory_management",
+)
