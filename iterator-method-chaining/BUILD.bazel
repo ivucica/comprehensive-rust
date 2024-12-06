@@ -1,14 +1,4 @@
-load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_test")
-
-rust_binary(
-    name = "iterator_method_chaining",
-    srcs = ["iterator_method_chaining.rs"],
-    crate_root = "iterator_method_chaining.rs",
-    edition = "2018",
-    deps = [
-        # ...list of dependencies if any...
-    ],
-)
+load("@rules_rust//rust:defs.bzl", "rust_test")
 
 rust_test(
     name = "iterator_method_chaining_test",
@@ -16,9 +6,4 @@ rust_test(
     edition = "2018",
     deps = [],
     use_libtest_harness = True,
-)
-
-alias(
-    name = "iterator-method-chaining",
-    actual = ":iterator_method_chaining",
 )

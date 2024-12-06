@@ -5,6 +5,5 @@ edition = "2021"
 
 [dependencies]
 
-[[bin]]
-name = "iterator-method-chaining"
+[lib]
 path = "iterator_method_chaining.rs"
