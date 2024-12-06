@@ -26,6 +26,8 @@ protobuf-parsing/target
 protobuf-parsing/protobuf-parsing
 iterator-method-chaining/target
 iterator-method-chaining/iterator-method-chaining
+gui-modules/target
+gui-modules/gui-modules
 bazel-*
 .bazelrc.*secrets
 hello-world/hello
