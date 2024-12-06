@@ -1,0 +1,33 @@
+load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_library", "rust_test")
+
+rust_library(
+    name = "gui_modules",
+    srcs = glob(["src/*.rs"]),
+    crate_root = "src/main.rs",  # Alternative: You may need to create lib.rs exporting your modules
+    edition = "2021",
+    deps = [],
+)
+
+rust_binary(
+    name = "gui_main",
+    srcs = glob(["src/*.rs"]),
+    edition = "2021",
+    deps = [":gui_modules"],
+)
+
+rust_test(
+    name = "gui_test",
+    srcs = glob(["src/*.rs"]),
+    crate_root = "src/main.rs",
+    edition = "2021",
+)
+
+alias(
+    name = "gui-modules",
+    actual = ":gui_modules",
+)
+
+# Unclear how to appropriately split these modules on bazel level since they
+# are all in the same crate, and hiding visibility from the compiler (by
+# splitting into smaller rust_library() targets and rust_test() targets) seems
+# to be tricky. Worth trying in the future.

@@ -19,3 +19,22 @@ impl Widget for Label {
         writeln!(buffer, "{}", &self.label).unwrap();
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_label_width() {
+        let label = Label::new("Test Label");
+        assert_eq!(label.width(), 10);
+    }
+
+    #[test]
+    fn test_draw_into() {
+        let label = Label::new("Test Label");
+        let mut buffer = String::new();
+        label.draw_into(&mut buffer);
+        assert_eq!(buffer.trim(), "Test Label");
+    }
+}
