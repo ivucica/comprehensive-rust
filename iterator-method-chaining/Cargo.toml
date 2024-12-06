@@ -1,0 +1,10 @@
+[package]
+name = "iterator-method-chaining"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+
+[[bin]]
+name = "iterator-method-chaining"
+path = "iterator_method_chaining.rs"
