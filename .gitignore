@@ -32,6 +32,8 @@ luhn-algorithm/target
 luhn-algorithm/luhn-algorithm
 result/target
 result/result
+ffi-wrapper/target
+ffi-wrapper/ffi-wrapper
 bazel-*
 .bazelrc.*secrets
 hello-world/hello
