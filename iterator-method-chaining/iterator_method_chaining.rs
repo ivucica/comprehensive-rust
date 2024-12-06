@@ -3,8 +3,13 @@
 ///
 /// Element `n` of the result is `values[(n+offset)%len] - values[n]`.
 fn offset_differences(offset: usize, values: Vec<i32>) -> Vec<i32> {
-    let z = values.iter().cycle().skip(offset).zip(values.iter());
-    z.map(|(a, b)| -> i32 {a-b} ).collect()
+    values
+    .iter()
+    .cycle()
+    .skip(offset)
+    .zip(values.iter())
+    .map(|(a, b)| -> i32 {a-b} )
+    .collect()
 }
 
 #[test]
