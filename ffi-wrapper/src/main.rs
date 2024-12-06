@@ -60,6 +60,8 @@ mod ffi {
 use std::ffi::{CStr, CString, OsStr, OsString};
 use std::os::unix::ffi::OsStrExt;
 
+use ffi::opendir;
+
 #[derive(Debug)]
 struct DirectoryIterator {
     path: CString,
@@ -68,9 +70,26 @@ struct DirectoryIterator {
 
 impl DirectoryIterator {
     fn new(path: &str) -> Result<DirectoryIterator, String> {
+        use std::os::raw;
         // Call opendir and return a Ok value if that worked,
         // otherwise return Err with a message.
-        unimplemented!()
+        let terminated_path : String = path.to_string() + "\0";
+        let dir;
+        unsafe {
+            let cstr : *const raw::c_char = CString::new(terminated_path)
+                .map_err(|e| format!("error allocating cstr for opendir: {e}"))?
+                .into_raw();
+            dir = opendir(cstr);
+            if dir.is_null() {
+                // TODO: check errno
+                return Err("opendir failed".to_string());
+            }
+        }
+
+        Ok(DirectoryIterator {
+            path: CString::new(path).unwrap(),
+            dir,
+        })
     }
 }
 
