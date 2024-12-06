@@ -3,7 +3,13 @@
 ///
 /// Element `n` of the result is `values[(n+offset)%len] - values[n]`.
 fn offset_differences(offset: usize, values: Vec<i32>) -> Vec<i32> {
-    unimplemented!()
+    let skip_it = values.iter().cycle().skip(offset);
+    let z = std::iter::zip(values.iter(), skip_it); // alt: skip_it.zip(values)
+    let mut processed: Vec<i32> = Vec::new();
+    for (a, b) in z {
+        processed.push(b-a);
+    };
+    processed
 }
 
 #[test]
