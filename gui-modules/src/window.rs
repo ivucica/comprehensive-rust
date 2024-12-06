@@ -47,3 +47,41 @@ impl Widget for Window {
         writeln!(buffer, "+-{:-<inner_width$}-+", "").unwrap();
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::label::Label;
+    use crate::button::Button;
+    use crate::widget::Widget;
+
+    #[test]
+    fn test_window_inner_width() {
+        let mut window = Window::new("My Window");
+        window.add_widget(Box::new(Label::new("Short")));
+        window.add_widget(Box::new(Label::new("A much longer label")));
+        assert_eq!(window.inner_width(), "A much longer label".len());
+    }
+
+    #[test]
+    fn test_window_width() {
+        let window = Window::new("My Window");
+        let expected_width = window.inner_width() + 4;
+        assert_eq!(window.width(), expected_width);
+    }
+
+    #[test]
+    fn test_draw_into() {
+        let mut window = Window::new("My Window");
+        window.add_widget(Box::new(Label::new("Content")));
+        window.add_widget(Box::new(Button::new("Click me")));
+
+        let mut buffer = String::new();
+        window.draw_into(&mut buffer);
+
+        // Check that the buffer contains the window title and widget outputs
+        assert!(buffer.contains("My Window"));
+        assert!(buffer.contains("Content"));
+        assert!(buffer.contains("Click me"));
+    }
+}
