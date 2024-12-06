@@ -5,9 +5,7 @@
 fn offset_differences(offset: usize, values: Vec<i32>) -> Vec<i32> {
     let skip_it = values.iter().cycle().skip(offset);
     let z = std::iter::zip(values.iter(), skip_it); // alt: skip_it.zip(values)
-    let processed: Vec<i32> = z.map(|(a, b)| -> i32 { b-a} ).collect();
-
-    processed
+    z.map(|(a, b)| -> i32 { b-a} ).collect()
 }
 
 #[test]
