@@ -24,6 +24,8 @@ health-statistics/target
 health-statistics/health-statistics
 protobuf-parsing/target
 protobuf-parsing/protobuf-parsing
+iterator-method-chaining/target
+iterator-method-chaining/iterator-method-chaining
 bazel-*
 .bazelrc.*secrets
 hello-world/hello
