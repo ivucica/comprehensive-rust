@@ -30,6 +30,8 @@ gui-modules/target
 gui-modules/gui-modules
 luhn-algorithm/target
 luhn-algorithm/luhn-algorithm
+result/target
+result/result
 bazel-*
 .bazelrc.*secrets
 hello-world/hello
