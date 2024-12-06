@@ -28,6 +28,8 @@ iterator-method-chaining/target
 iterator-method-chaining/iterator-method-chaining
 gui-modules/target
 gui-modules/gui-modules
+luhn-algorithm/target
+luhn-algorithm/luhn-algorithm
 bazel-*
 .bazelrc.*secrets
 hello-world/hello

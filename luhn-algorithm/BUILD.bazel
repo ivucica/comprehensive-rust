@@ -1,0 +1,8 @@
+load("@rules_rust//rust:defs.bzl", "rust_test")
+
+rust_test(
+    name = "luhn_algorithm_test",
+    srcs = glob(["*.rs"]),
+    crate_root = "luhn_algorithm.rs",
+    edition = "2021",
+)
