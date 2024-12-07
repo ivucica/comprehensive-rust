@@ -1,0 +1,25 @@
+load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_library", "rust_binary", "rust_test")
+
+rust_library(
+    name = "ffi_wrapper_lib",
+    srcs = [
+        "src/main.rs",
+    ],
+    deps = [
+        # "//ffi/rust_calling_c/c:native_matrix",
+        "@libc",
+    ],
+    edition = "2021",
+)
+
+rust_binary(
+    name = "ffi_wrapper",
+    srcs = ["src/main.rs"],
+    deps = ["@libc"],
+    edition = "2021",
+)
+
+rust_doc(
+    name = "ffi_wrapper_doc",
+    crate = ":ffi_wrapper_lib",
+)
