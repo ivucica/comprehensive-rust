@@ -1,7 +1,20 @@
+load("@crate_index_junitify//:defs.bzl", "aliases", "all_crate_deps")
+load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test", "rust_binary")
+
 sh_binary(
   name = "junitify",
   srcs = ["junitify.sh"],
   deps = [
     #"@@cargo2junit//:all",
-  ],
+  ] + all_crate_deps(normal = True, normal_dev = True),
+  # only for crate:
+  # aliases = aliases(normal_dev = True, proc_macro_dev = True),
+)
+
+rust_binary(
+  name = "junitify-to-bazel",
+  srcs = ["src/main.rs"],
+  edition = "2018",
+  aliases = aliases(normal_dev = True, proc_macro_dev = True),
+  deps = all_crate_deps(normal = True, normal_dev = True),
 )

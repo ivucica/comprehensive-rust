@@ -1,5 +1,5 @@
 {
-  "checksum": "e39b7bcf36853a649130e7c107ed27ca94b447af0d4bbb5e430e6ee409810280",
+  "checksum": "3225f97ad46b7821a8572cb596a3b5d05ca4c7316c69164f42f596551779136e",
   "crates": {
     "junitify-for-bazel 0.1.0": {
       "name": "junitify-for-bazel",

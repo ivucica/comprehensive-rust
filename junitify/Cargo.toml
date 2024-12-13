@@ -7,6 +7,10 @@ Mock crate to pull in cargo2junit
 """
 edition = "2018"
 
+[dependencies]
+# unclear why cargo-bazel does not create a bazel repo for it
+cargo2junit = "*"
+
 [dev-dependencies]
 cargo2junit = "*"
 
