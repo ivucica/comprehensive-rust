@@ -33,7 +33,7 @@ export SCRIPT_PATH="$(realpath "${BASH_SOURCE[0]}")"
 
 # define them so they can be passed via bazel test
 export CARGO_HOME="${CARGO_HOME:-"${HOME}"/.cargo}"
-export RUST_JUNIT_CONVERTER="${RUST_JUNIT_CONVERTER:-junitify}"
+export RUST_JUNIT_CONVERTER="${RUST_JUNIT_CONVERTER:-cargo2junit}"
 if [[ "${RUST_JUNIT_CONVERTER}" == junitify ]] ; then
   export JUNITIFY_BIN="${CARGO_HOME}"/bin/junitify
   if [[ ! -e "${JUNITIFY_BIN}" ]] ; then
