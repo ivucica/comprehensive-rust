@@ -20,6 +20,10 @@ rules_rust_dependencies()
 
 rust_register_toolchains(
     edition = "2018",
+    versions = [
+        "1.83.1",  # if we did not pass a non-nightly version, this would be *required*: --@rules_rust//rust/toolchain/channel=nightly
+        "nightly/2024-10-17",
+    ],
 )
 
 _LIBC_BUILD_FILE_CONTENT = """\
