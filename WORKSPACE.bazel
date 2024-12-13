@@ -33,6 +33,8 @@ rust_register_toolchains(
     ],
 )
 
+# TODO: can we replace this? https://www.tweag.io/blog/2023-07-27-building-rust-workspace-with-bazel/
+# Some rules are added below for cargo2junit.
 _LIBC_BUILD_FILE_CONTENT = """\
 load("@rules_rust//rust:defs.bzl", "rust_library")
 
@@ -61,6 +63,42 @@ http_archive(
         "https://github.com/rust-lang/libc/archive/0.2.20.zip",
     ],
 )
+
+
+# crate_universe stuff to pull in crates we need.
+load("@rules_rust//crate_universe:repositories.bzl", "crate_universe_dependencies")
+
+crate_universe_dependencies()  # usually would be no args; but bootstrap=True might be needed if rules_rust is "not a release artifact"; it does not actually work however
+
+load("@rules_rust//crate_universe:defs.bzl", "crates_repository")
+
+# note: we create one for junitification, but we could have one for all crates in repo
+crates_repository(
+    name = "crate_index_junitify",
+    cargo_lockfile = "//junitify:Cargo.lock",  # single lock of the workspace
+    lockfile = "//junitify:cargo-bazel-lock.json",
+    manifests = [
+        # list of all tomls in the workspace
+        "//junitify:Cargo.toml",
+    ],
+)
+
+load("@crate_index_junitify//:defs.bzl", "crate_repositories")
+
+crate_repositories()
+
+# next:
+# cd junitify && touch cargo-bazel-lock.json BUILD.bazel
+# CARGO_BAZEL_REPIN=1 bazel sync --only=crate_index  # <-- run every time deps are changed
+#
+# unfortunately:
+# Error in fail: No generator URL was found either in the `CARGO_BAZEL_GENERATOR_URL` environment variable or for the `x86_64-unknown-linux-gnu` triple in the `generator_urls` attribute
+# ERROR: no such package '@@crate_index_junitify//': No generator URL was found either in the `CARGO_BAZEL_GENERATOR_URL` environment variable or for the `x86_64-unknown-linux-gnu` triple in the `generator_urls` attribute
+#
+# "Note that if the current version of rules_rust is not a release artifact, you may need to set additional flags such as bootstrap = True on the crate_universe_dependencies call above or crates_repository::generator_urls in uses of crates_repository.
+#
+
+# end crate_universe stuff
 
 # Toolchains for remote execution via buildbuddy.
 http_archive(
