@@ -1,12 +1,25 @@
 {
-  "checksum": "18c14a20866abb37ac3290b821240752ce6f601a8508756b4daf98cc37d7b29b",
+  "checksum": "e39b7bcf36853a649130e7c107ed27ca94b447af0d4bbb5e430e6ee409810280",
   "crates": {
     "junitify-for-bazel 0.1.0": {
       "name": "junitify-for-bazel",
       "version": "0.1.0",
       "package_url": null,
       "repository": null,
-      "targets": [],
+      "targets": [
+        {
+          "Binary": {
+            "crate_name": "junitify-for-bazel",
+            "crate_root": "src/main.rs",
+            "srcs": {
+              "allow_empty": true,
+              "include": [
+                "**/*.rs"
+              ]
+            }
+          }
+        }
+      ],
       "library_target_name": null,
       "common_attrs": {
         "compile_data_glob": [

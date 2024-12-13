@@ -81,6 +81,7 @@ crates_repository(
         # list of all tomls in the workspace
         "//junitify:Cargo.toml",
     ],
+    generate_binaries = True,  # generate binaries for all; alternative: annotations = { "cargo2junit": [crate.annotation(gen_binaries=True)] } -- or it can take a string list in gen_binaries with binaries that should be generated
 )
 
 load("@crate_index_junitify//:defs.bzl", "crate_repositories")
