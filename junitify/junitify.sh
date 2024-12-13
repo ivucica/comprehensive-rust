@@ -1,4 +1,3 @@
-
 #!/bin/bash
 #
 # This file tries to run bazel tests, then parse the output using junitify.
@@ -30,6 +29,23 @@
 export SCRIPT_PATH="$(realpath "${BASH_SOURCE[0]}")"
 # alternative:
 # export SCRIPT_PATH="$(realpath "$0")"
+
+
+if [[ -e "${PWD}"/external/crate_index_junitify__cargo2junit-0.1.13/cargo2junit__bin ]] ; then
+  # we are inside bazel under .runfiles inside _main
+  # we could use RUN_UNDER_RUNFILES too
+  # perhaps $PWD is $RUNFILES_DIR/$TEST_WORKSPACE?
+  export RUST_JUNIT_CONVERTER=cargo2junit
+  export CARGO2JUNIT_BIN="$(realpath "${PWD}"/external/crate_index_junitify__cargo2junit-0.1.13/cargo2junit__bin)"
+
+  if [[ ! -z "${BAZEL_TEST}" ]] ; then
+    export UNDER_JUNITIFICATION_WRAPPER=1
+    export RUSTC_BOOTSTRAP=True  # oof
+  else
+    echo "do not run this sh_binary directly, use only as --run_under"
+    exit 1
+  fi
+fi
 
 # define them so they can be passed via bazel test
 export CARGO_HOME="${CARGO_HOME:-"${HOME}"/.cargo}"
@@ -136,6 +152,7 @@ else
 
     # just for testing of this branch: fail so it doesnt get cached
     #exit 1
+    exit 0  # unclear why required when run under --run_under=//junitify, and only then; is set -v doing this?
   else
     echo 'neither junitify nor cargo2junit used'
     exit 1

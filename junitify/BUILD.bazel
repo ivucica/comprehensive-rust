@@ -4,9 +4,8 @@ load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test", "rust_binary")
 sh_binary(
   name = "junitify",
   srcs = ["junitify.sh"],
-  deps = [
-    #"@@cargo2junit//:all",
-  ] + all_crate_deps(normal = True, normal_dev = True),
+  deps = [],
+  data = ["@crate_index_junitify//:cargo2junit__cargo2junit"],  # we are inside the runfiles, so it is available as: ./external/crate_index_junitify__cargo2junit-0.1.13/cargo2junit__bin
   # only for crate:
   # aliases = aliases(normal_dev = True, proc_macro_dev = True),
 )
