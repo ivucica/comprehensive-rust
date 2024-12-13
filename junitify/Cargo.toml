@@ -9,9 +9,10 @@ edition = "2018"
 
 [dependencies]
 # unclear why cargo-bazel does not create a bazel repo for it
-cargo2junit = "*"
+# 0.1.13 so we work on rust 1.63.0 on the dev machine
+cargo2junit = { version = "=0.1.13", artifact = "bin" }
 
 [dev-dependencies]
-cargo2junit = "*"
+cargo2junit = { version = "=0.1.13", artifact = "bin" }
 
 
