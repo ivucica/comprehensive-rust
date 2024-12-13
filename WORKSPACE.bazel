@@ -3,9 +3,15 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 # Load the Rust rules
 http_archive(
     name = "rules_rust",
-    strip_prefix = "rules_rust-0.54.1",
-    integrity = "sha256-72SWmp+smWgg7eR3yHTBXv0G10i1uaA3LaDmSTT4KYk=",
-    urls = ["https://github.com/bazelbuild/rules_rust/archive/0.54.1.tar.gz"],
+    # strip_prefix = "rules_rust-0.54.1",
+    # integrity = "sha256-72SWmp+smWgg7eR3yHTBXv0G10i1uaA3LaDmSTT4KYk=",
+    # urls = ["https://github.com/bazelbuild/rules_rust/archive/0.54.1.tar.gz"],
+
+    # the 'release_artefact' version.
+    # this version allows crate_universe_dependencies to work since it will have private/urls.bzl populated with cargo-bazel artefact download urls
+    integrity = "sha256-r09Wyq5QqZpov845sUG1Cd1oVIyCBLmKt6HK/JTVuwI=",
+    urls = ["https://github.com/bazelbuild/rules_rust/releases/download/0.54.1/rules_rust-v0.54.1.tar.gz"],
+
 )
 
 load("@rules_rust//rust:repositories.bzl", "rust_repositories")
@@ -21,6 +27,7 @@ rules_rust_dependencies()
 rust_register_toolchains(
     edition = "2018",
     versions = [
+        # note: when we switched to a release artefact version, 1.82.0 was downloaded
         "1.83.1",  # if we did not pass a non-nightly version, this would be *required*: --@rules_rust//rust/toolchain/channel=nightly
         "nightly/2024-10-17",
     ],
