@@ -9,6 +9,6 @@ actions:
         branches:
           - "*"
     steps:
-      - run: "bazel test --run_under=//junitify //..."
+      - run: "bazel test --run_under=//junitify --remote_cache=grpcs://remote.buildbuddy.io --remote_timeout=3600 //..."
 
     # for mac, add a new action then os: "darwin" + arch: "arm64" if on apple silicon, then run a worker with $MY_POOL = workflows and at least 8GB RAM set with SYS_MEMORY_BYTES
