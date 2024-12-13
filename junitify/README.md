@@ -1,3 +1,17 @@
-Note: this currently does NOT correctly pull in cargo2rust bin as a bazel repository.
+To build with cargo, use `cargo -Z bindeps build` -- bazel rules do that by switching to nightly, then repinning (which starts to respect bindeps).
 
-To build with cargo, use cargo -Z bindeps build
+The dep is then exposed as a runnable target:
+
+    @crate_index_junitify//:cargo2junit__cargo2junit
+
+visible via
+
+    bazel query //external:*
+
+We can also see:
+
+    bazel query @crate_index_junitify__cargo2junit-0.1.13//...
+
+which when queried says:
+
+    @crate_index_junitify__cargo2junit-0.1.13//:cargo2junit__bin
