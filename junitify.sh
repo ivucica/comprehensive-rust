@@ -21,6 +21,11 @@
 # # ignore parsing errors
 # cargo test -- --format=json -Z unstable-options --report-time | junitify -i --out tests/
 
+# cargo2junit version:
+# (for 1.63.0):
+# cargo install --locked cargo2junit@0.1.13
+#
+# then run with RUSTC_BOOTSTRAP=1  or with +beta before converting with just cargo2junit.
 
 export SCRIPT_PATH="$(realpath "${BASH_SOURCE[0]}")"
 # alternative:
@@ -28,19 +33,34 @@ export SCRIPT_PATH="$(realpath "${BASH_SOURCE[0]}")"
 
 # define them so they can be passed via bazel test
 export CARGO_HOME="${CARGO_HOME:-"${HOME}"/.cargo}"
-export JUNITIFY_BIN="${CARGO_HOME}"/bin/junitify
-if [[ ! -e "${JUNITIFY_BIN}" ]] ; then
-  echo "no junitify at ${JUNITIFY_BIN} (cargo home: ${CARGO_HOME}, home: ${HOME})"
+export RUST_JUNIT_CONVERTER="${RUST_JUNIT_CONVERTER:-junitify}"
+if [[ "${RUST_JUNIT_CONVERTER}" == junitify ]] ; then
+  export JUNITIFY_BIN="${CARGO_HOME}"/bin/junitify
+  if [[ ! -e "${JUNITIFY_BIN}" ]] ; then
+    echo "no junitify at ${JUNITIFY_BIN} (cargo home: ${CARGO_HOME}, home: ${HOME})"
+    exit 1
+  fi
+  export RUST_JUNIT_FLAG=--test_env=JUNITIFY_BIN
+elif [[ "${RUST_JUNIT_CONVERTER}" == cargo2junit ]] ; then
+  export CARGO2JUNIT_BIN="${CARGO_HOME}"/bin/cargo2junit
+  if [[ ! -e "${CARGO2JUNIT_BIN}" ]] ; then
+    echo "no cargo2junit at ${CARGO2JUNIT_BIN} (cargo home: ${CARGO_HOME}, home: ${HOME})"
+    exit 1
+  fi
+  export RUST_JUNIT_FLAG=--test_env=CARGO2JUNIT_BIN
+else
+  echo 'RUST_JUNIT_CONVERTER must be junitify or cargo2junit'
   exit 1
 fi
 
 # option -Z requires nightly
 export CHANNEL=--@rules_rust//rust/toolchain/channel=nightly
+# note: nightly stuff might be permissible with RUSTC_BOOTSTRAP as well (or "+beta" as cargo2junit calls it)
 
 if [[ -z "${UNDER_JUNITIFICATION_WRAPPER}" ]] ; then
   # we tell it to inherit CARGO_HOME and JUNITIFY_BIN
   # we run locally since neither the script nor junitify will be available under RBE
-  bazel test --config=remote --spawn_strategy=local --run_under="${SCRIPT_PATH}" --test_env=CARGO_HOME --test_env=JUNITIFY_BIN --test_env=UNDER_JUNITIFICATION_WRAPPER=1 --local_test_jobs=1 --verbose_test_summary --test_output=all ${CHANNEL} "$@"
+  bazel test --config=remote --spawn_strategy=local --run_under="${SCRIPT_PATH}" --test_env=CARGO_HOME "${RUST_JUNIT_FLAG}" --test_env=UNDER_JUNITIFICATION_WRAPPER=1 --local_test_jobs=1 --verbose_test_summary --test_output=all ${CHANNEL} "$@"
   # some more flags: --test_output=streamed --test_timeout=1 --local_sigkill_grace_seconds=3
 else
   set -v
@@ -67,7 +87,7 @@ else
 
   export JSON_OUTPUT_FILE="${TEST_UNDECLARED_OUTPUTS_DIR}/test.json"
   "${@:1}" --format=json -Z unstable-options --report-time | tee "${JSON_OUTPUT_FILE}"
-  if [[ ! -e "${XML_OUTPUT_FILE}" ]] ; then
+  if [[ ! -e "${XML_OUTPUT_FILE}" ]] && [[ ! -z "${JUNITIFY_BIN}" ]] ; then
     # no XML generated, so let's do it ourselves
     # -i: ignore parsing errors
     # no --out: write xml to stdout
@@ -111,9 +131,20 @@ else
 
     cat "${JSON_OUTPUT_FILE}" | "${JUNITIFY_BIN}" -i | sed 's/^<test>$//' | sed 's@^</test>$@</testsuites>@' | sed 's@"UTF-8"?>$@"UTF-8"?><testsuites>@'  | sed 's@ classname="@ status="run" classname="@g' | tail -n+2 > "${XML_OUTPUT_FILE}"
 
+    grep '"event": "failed"' "${JSON_OUTPUT_FILE}" && exit 1
+
     # just for testing of sed: fail so it doesnt get cached
     #exit 1
+  elif [[ ! -e "${XML_OUTPUT_FILE}" ]] && [[ ! -z "${CARGO2JUNIT_BIN}" ]] ; then
+    cat "${JSON_OUTPUT_FILE}" | "${CARGO2JUNIT_BIN}" > "${XML_OUTPUT_FILE}"
 
+    grep '"event": "failed"' "${JSON_OUTPUT_FILE}" && exit 1
+
+    # just for testing of this branch: fail so it doesnt get cached
+    #exit 1
+  else
+    echo 'neither junitify nor cargo2junit used'
+    exit 1
   fi
 fi
 
