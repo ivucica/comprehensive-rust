@@ -82,6 +82,7 @@ crates_repository(
         "//junitify:Cargo.toml",
     ],
     generate_binaries = True,  # generate binaries for all; alternative: annotations = { "cargo2junit": [crate.annotation(gen_binaries=True)] } -- or it can take a string list in gen_binaries with binaries that should be generated
+    rust_version = "nightly",  # required so -Z bindeps can be passed -- needed at least for CARGO_BAZEL_REPIN=true
 )
 
 load("@crate_index_junitify//:defs.bzl", "crate_repositories")
