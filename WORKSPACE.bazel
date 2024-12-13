@@ -89,7 +89,7 @@ crate_repositories()
 
 # next:
 # cd junitify && touch cargo-bazel-lock.json BUILD.bazel
-# CARGO_BAZEL_REPIN=1 bazel sync --only=crate_index  # <-- run every time deps are changed
+# CARGO_BAZEL_REPIN=1 bazel sync --only=crate_index_junitify  # <-- run every time deps are changed
 #
 # unfortunately:
 # Error in fail: No generator URL was found either in the `CARGO_BAZEL_GENERATOR_URL` environment variable or for the `x86_64-unknown-linux-gnu` triple in the `generator_urls` attribute
