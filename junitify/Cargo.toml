@@ -1,0 +1,13 @@
+[package]
+name = "junitify-for-bazel"
+version = "0.1.0"  #:version
+authors = ["TODO <todo@example.org>"]
+description = """
+Mock crate to pull in cargo2junit
+"""
+edition = "2018"
+
+[dev-dependencies]
+cargo2junit = "*"
+
+
