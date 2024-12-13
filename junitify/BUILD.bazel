@@ -1,0 +1,7 @@
+sh_binary(
+  name = "junitify",
+  srcs = ["junitify.sh"],
+  deps = [
+    #"@@cargo2junit//:all",
+  ],
+)
