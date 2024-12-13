@@ -35,14 +35,14 @@ export SCRIPT_PATH="$(realpath "${BASH_SOURCE[0]}")"
 export CARGO_HOME="${CARGO_HOME:-"${HOME}"/.cargo}"
 export RUST_JUNIT_CONVERTER="${RUST_JUNIT_CONVERTER:-cargo2junit}"
 if [[ "${RUST_JUNIT_CONVERTER}" == junitify ]] ; then
-  export JUNITIFY_BIN="${CARGO_HOME}"/bin/junitify
+  export JUNITIFY_BIN="${JUNITIFY_BIN:-"${CARGO_HOME}"/bin/junitify}"
   if [[ ! -e "${JUNITIFY_BIN}" ]] ; then
     echo "no junitify at ${JUNITIFY_BIN} (cargo home: ${CARGO_HOME}, home: ${HOME})"
     exit 1
   fi
   export RUST_JUNIT_FLAG=--test_env=JUNITIFY_BIN
 elif [[ "${RUST_JUNIT_CONVERTER}" == cargo2junit ]] ; then
-  export CARGO2JUNIT_BIN="${CARGO_HOME}"/bin/cargo2junit
+  export CARGO2JUNIT_BIN="${CARGO2JUNIT_BIN:-"${CARGO_HOME}"/bin/cargo2junit}"
   if [[ ! -e "${CARGO2JUNIT_BIN}" ]] ; then
     echo "no cargo2junit at ${CARGO2JUNIT_BIN} (cargo home: ${CARGO_HOME}, home: ${HOME})"
     exit 1
@@ -78,12 +78,6 @@ else
   else
     export CARGO_HOME="${CARGO_HOME:-"$1"}"
   fi
-  export JUNITIFY_BIN="${CARGO_HOME}"/bin/junitify
-  if [[ ! -e "${JUNITIFY_BIN}" ]] ; then
-    echo "no junitify at ${JUNITIFY_BIN} (cargo home: ${CARGO_HOME}, home: ${HOME})"
-    exit 1
-  fi
-
 
   export JSON_OUTPUT_FILE="${TEST_UNDECLARED_OUTPUTS_DIR}/test.json"
   "${@:1}" --format=json -Z unstable-options --report-time | tee "${JSON_OUTPUT_FILE}"
