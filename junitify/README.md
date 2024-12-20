@@ -22,3 +22,6 @@ The output can be used by tools like BuildBuddy or by `xunit-viewer` from NPM:
     ~/.npm-global/bin/xunit-viewer -o /tmp/file-to-view.html -r $(realpath bazel-testlogs/)  # this might go over too many files
     ~/.npm-global/bin/xunit-viewer -c -r $(realpath bazel-testlogs/)  # same as above, but shows result in console
 
+To run bazel tests while outputing JUnit-formatted `test.xml` for Rust:
+
+    bazel test --run_under=//junitify //...
