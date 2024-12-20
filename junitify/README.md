@@ -15,3 +15,10 @@ We can also see:
 which when queried says:
 
     @crate_index_junitify__cargo2junit-0.1.13//:cargo2junit__bin
+
+The output can be used by tools like BuildBuddy or by `xunit-viewer` from NPM:
+
+    npm -g install xunit-viewer
+    ~/.npm-global/bin/xunit-viewer -o /tmp/file-to-view.html -r $(realpath bazel-testlogs/)  # this might go over too many files
+    ~/.npm-global/bin/xunit-viewer -c -r $(realpath bazel-testlogs/)  # same as above, but shows result in console
+
